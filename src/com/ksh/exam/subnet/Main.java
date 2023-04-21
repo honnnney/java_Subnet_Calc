@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+
+
         System.out.printf("서브넷 마스크 입력: ");
         int subnetmask = sc.nextInt();
 
@@ -25,18 +27,29 @@ public class Main {
         }
         System.out.printf("%d, %d, %d, %d\n", hostcount[0],hostcount[1],hostcount[2],hostcount[3]);
 
+        int sum=0;  //각 서브넷들 전체 사용가능한 네트워크 수
+
         for(int i=0;i<hostcount.length;i++){
             while (Math.pow(2,power[i]) <= hostcount[i]){
                 power[i]++;
             }
-            System.out.printf("%d\n", power[i]);
+
+            sum = sum + (int)Math.pow(2,power[i]);
+
+            System.out.printf("%d번 서브넷의 SubnetMask: %d\n", i+1, 32 - power[i]);
+            System.out.printf("%d번의 사용가능 네트워크 수: %d\n",i+1, (int)Math.pow(2, power[i]));
+
         }
-
-
-
+        System.out.printf("%d개 서브넷들의 사용가능한 네트워크 수: %d\n", sn, sum);
 
         int networkcount = (int)Math.pow(2, 32-subnetmask);
         System.out.printf("네트워크 개수: %d\n", networkcount);
+
+        if(sum > networkcount){
+            System.out.printf("host 개수를 잘못 입력하셨습니다.\n");
+            System.exit(0);
+        }
+
 
 
         sc.close();
