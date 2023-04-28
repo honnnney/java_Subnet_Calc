@@ -62,25 +62,39 @@ public class Main {
         int count = 1;
 
         System.out.printf("Subnet\tNetworkID\tSubnet Mask\t\tRange\t\tBroadcast\n");
-        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
-            count, //서브넷 번호
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
-            32-power[0],    //서브넷 마스크
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 2,     //범위 마지막
-            ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1 - ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1);    //Broadcast, 범위 마지막, 사용불가
+//        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
+//            count, //서브넷 번호
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
+//            32-power[0],    //서브넷 마스크
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 2,     //범위 마지막
+//            ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1 - ipNetworkInt[3] - 1,  //범위 내 개수 => broadcast - network id - 1
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1);    //Broadcast, 범위 마지막, 사용불가
+//
+//        ipNetworkInt[3] += (int)Math.pow(2,power[0]);
+//
+//        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
+//            count+1, //서브넷 번호
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
+//            32-power[1],    //서브넷 마스크
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1])- 2,     //범위 마지막
+//            ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1 -ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
+//            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1);    //Broadcast, 범위 마지막, 사용불가
 
-        ipNetworkInt[3] += (int)Math.pow(2,power[0]);
 
-        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
-            count+1, //서브넷 번호
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
-            32-power[1],    //서브넷 마스크
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1])- 2,     //범위 마지막
-            ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1 -ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
-            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1);    //Broadcast, 범위 마지막, 사용불가
+        for(int i = 0;i < sn;i++){
+            System.out.printf("%d\t%d.%d.%d.%d\t\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
+                i + 1,  //서브넷 번호
+                ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //NetworkID
+                32 - power[i],      //서브넷 번호
+                ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //사용가능 범위 첫 번째
+                ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[i]) - 2,     //사용가능 범위 마지막
+                ipNetworkInt[3] + (int)Math.pow(2,power[i]) - 1 - ipNetworkInt[3] - 1,      //범위 내 개수 => broadcast - network id - 1
+                ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[i]) - 1);        //Broadcast
+
+            ipNetworkInt[3] += (int)Math.pow(2,power[i]);
+        }
 
         sc.close();
     }
