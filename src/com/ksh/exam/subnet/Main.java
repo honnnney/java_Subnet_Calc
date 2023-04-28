@@ -33,7 +33,7 @@ public class Main {
             System.out.printf("subnet%d : How many hosts: ", i+1);
             hostcount[i] = sc.nextInt();
         }
-        System.out.printf("%d, %d, %d, %d\n", hostcount[0],hostcount[1],hostcount[2],hostcount[3]);
+//        System.out.printf("%d, %d, %d, %d\n", hostcount[0],hostcount[1],hostcount[2],hostcount[3]);
 
         int sum=0;  //각 서브넷들 전체 사용가능한 네트워크 수
 
@@ -43,8 +43,8 @@ public class Main {
             }
             sum = sum + (int)Math.pow(2,power[i]);
 
-            System.out.printf("%d번 서브넷의 SubnetMask: %d\n", i+1, 32 - power[i]);
-            System.out.printf("%d번의 사용가능 네트워크 수: %d\n",i+1, (int)Math.pow(2, power[i]));
+//            System.out.printf("%d번 서브넷의 SubnetMask: %d\n", i+1, 32 - power[i]);
+//            System.out.printf("%d번의 사용가능 네트워크 수: %d\n",i+1, (int)Math.pow(2, power[i]));
         }
 
         System.out.printf("%d개 서브넷들의 사용가능한 네트워크 수: %d\n", sn, sum);
@@ -59,16 +59,28 @@ public class Main {
 
         System.out.printf("%d.%d.%d.%d\n", ipNetworkInt[0],ipNetworkInt[1],ipNetworkInt[2],ipNetworkInt[3]);
 
-        System.out.printf("Subnet\tNetwork ID\tSubnet Mask\t\tRange\t\tBroadcast\n");
+        int count = 1;
+
+        System.out.printf("Subnet\tNetworkID\tSubnet Mask\t\tRange\t\tBroadcast\n");
         System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
-            a[0]+1, //서브넷 번호
+            count, //서브넷 번호
             ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
             32-power[0],    //서브넷 마스크
             ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
             ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 2,     //범위 마지막
             ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1 - ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
             ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1);    //Broadcast, 범위 마지막, 사용불가
-        
+
+        ipNetworkInt[3] += (int)Math.pow(2,power[0]);
+
+        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
+            count+1, //서브넷 번호
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
+            32-power[1],    //서브넷 마스크
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1])- 2,     //범위 마지막
+            ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1 -ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[1]) - 1);    //Broadcast, 범위 마지막, 사용불가
 
         sc.close();
     }
