@@ -6,7 +6,15 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        System.out.printf("네트워크 주소 입력: ");
+        String ipAddress = sc.nextLine();
+//        System.out.printf("네트워크 주소: %s\n", ipAddress);
 
+        String[] ipNetworkArray = ipAddress.split("\\.");
+        int[] ipNetworkInt = new int[4];
+        for (int i=0;i<4;i++){
+            ipNetworkInt[i] = Integer.parseInt(ipNetworkArray[i]);
+        }
 
         System.out.printf("서브넷 마스크 입력: ");
         int subnetmask = sc.nextInt();
@@ -33,13 +41,12 @@ public class Main {
             while (Math.pow(2,power[i]) <= hostcount[i]){
                 power[i]++;
             }
-
             sum = sum + (int)Math.pow(2,power[i]);
 
             System.out.printf("%d번 서브넷의 SubnetMask: %d\n", i+1, 32 - power[i]);
             System.out.printf("%d번의 사용가능 네트워크 수: %d\n",i+1, (int)Math.pow(2, power[i]));
-
         }
+
         System.out.printf("%d개 서브넷들의 사용가능한 네트워크 수: %d\n", sn, sum);
 
         int networkcount = (int)Math.pow(2, 32-subnetmask);
@@ -50,7 +57,18 @@ public class Main {
             System.exit(0);
         }
 
+        System.out.printf("%d.%d.%d.%d\n", ipNetworkInt[0],ipNetworkInt[1],ipNetworkInt[2],ipNetworkInt[3]);
 
+        System.out.printf("Subnet\tNetwork ID\tSubnet Mask\t\tRange\t\tBroadcast\n");
+        System.out.printf("%d\t%d.%d.%d.%d\t%d\t\t%d.%d.%d.%d ~ %d.%d.%d.%d(%dEA)\t\t%d.%d.%d.%d\n",
+            a[0]+1, //서브넷 번호
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3],     //Network ID, 범위 첫 번째, 사용불가
+            32-power[0],    //서브넷 마스크
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + 1,     //범위 첫 번째
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 2,     //범위 마지막
+            ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1 - ipNetworkInt[3] - 1 ,  //범위 내 개수 => broadcast - network id - 1
+            ipNetworkInt[0], ipNetworkInt[1], ipNetworkInt[2], ipNetworkInt[3] + (int)Math.pow(2,power[0]) - 1);    //Broadcast, 범위 마지막, 사용불가
+        
 
         sc.close();
     }
